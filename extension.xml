@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!--
-  	Author: Ryan Hagelstrom
-	Copyright � 2021
-	This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
-	https://creativecommons.org/licenses/by-sa/4.0/
+Author: Ryan Hagelstrom
+Copyright � 2021
+This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+https://creativecommons.org/licenses/by-sa/4.0/
 -->
 <root release="3.0" version="3">
-    <announcement text="High Variance v1.0\rby Ryan Hagelstrom 2021" font="emotefont" icon="HighVariance"/>
+	<announcement text="High Variance v1.1\rby Ryan Hagelstrom 2021" font="emotefont" icon="HighVariance" />
 	<properties>
-    	<loadorder>999</loadorder>
+		<loadorder>999</loadorder>
 		<name>Feature: High Variance</name>
-		<version>1.0</version>
+		<version>1.1</version>
 		<author>Ryan Hagelstrom</author>
 		<description>CursedDice, all 20s are 1s on d20s. BlessedDice, all 1s are 20s. HighVariance, d20s have three 20s and three 1s. CritFumble, d20 rolls are crit or fumble</description>
 	</properties>
 	<base>
-    	<icon name="HighVariance" file="graphics/icons/HighVariance.png"></icon>
+		<icon name="HighVariance" file="graphics/icons/HighVariance.png" />
 		<includefile source="strings/strings_HighVariance.xml" />
-    	<script name="ActionsManagerHighVariance" file="scripts/manager_actionsHighVariance.lua" />
+		<script name="ActionsManagerHighVariance" file="scripts/manager_actionsHighVariance.lua" />
 	</base>
 </root>
