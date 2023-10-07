@@ -2,33 +2,40 @@
 --	Copyright � 2021
 --	This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
 --	https://creativecommons.org/licenses/by-sa/4.0/
+--
+-- luacheck: globals onInit onClose customHandleResolution getEffect getHVOptions criticalFumble
+-- luacheck: globals cursedDice blessedDice highVarianceDice
 local RulesetEffectManager;
 local handleResolution;
 
 function onInit()
     if Session.IsHost then
-        OptionsManager.registerOption2('HVDICE', false, 'option_header_high_variance', 'option_label_hv_dice', 'option_entry_cycler', {
+        OptionsManager.registerOption2('HVDICE', false, 'option_header_high_variance', 'option_label_hv_dice',
+                                       'option_entry_cycler', {
             labels = 'option_high_variance_dice|option_blessed_dice|option_cursed_dice|option_crit_fumble_dice',
             values = 'hv|b|c|cf',
             baselabel = 'option_value_hv_off',
             baseval = 'off',
             default = 'off'
         });
-        OptionsManager.registerOption2('HVACTOR', false, 'option_header_high_variance', 'option_label_hv_actors', 'option_entry_cycler', {
+        OptionsManager.registerOption2('HVACTOR', false, 'option_header_high_variance', 'option_label_hv_actors',
+                                       'option_entry_cycler', {
             labels = 'option_value_hv_friend|option_value_hv_foe',
             values = 'friend|foe',
             baselabel = 'option_value_hv_all',
             baseval = 'all',
             default = 'all'
         });
-        OptionsManager.registerOption2('HVROLLS', false, 'option_header_high_variance', 'option_label_hv_rolls', 'option_entry_cycler', {
+        OptionsManager.registerOption2('HVROLLS', false, 'option_header_high_variance', 'option_label_hv_rolls',
+                                       'option_entry_cycler', {
             labels = 'option_value_hv_damage|option_value_hv_attack|option_value_hv_all|option_value_hv_d20',
             values = 'dmgheal|atk|all|d20',
             baselabel = 'option_value_hv_attack_damage',
             baseval = 'atkdmgheal',
             default = 'atkdmgheal'
         });
-        OptionsManager.registerOption2('HVCRITFUM', false, 'option_header_high_variance', 'option_label_hv_critfum', 'option_entry_cycler', {
+        OptionsManager.registerOption2('HVCRITFUM', false, 'option_header_high_variance', 'option_label_hv_critfum',
+                                       'option_entry_cycler', {
             labels = '11|12|13|14|15|16|17|18|19|1|2|3|4|5|6|7|8|9',
             values = '11|12|13|14|15|16|17|18|19|1|2|3|4|5|6|7|8|9',
             baselabel = 'option_value_hv_critfum',
@@ -66,11 +73,10 @@ end
 function customHandleResolution(rRoll, rSource, aTargets)
     if rSource ~= nil then
         local tOptions = getHVOptions(rSource);
-        if tOptions.sHVDice ~= 'off' and
-            (tOptions.sHVRoll == 'all' or tOptions.sHVRoll == 'd20' or
-                ((tOptions.sHVRoll == 'atk' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'attack') or
-                ((tOptions.sHVRoll == 'dmgheal' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'damage') or
-                ((tOptions.sHVRoll == 'dmgheal' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'heal')) then
+        if tOptions.sHVDice ~= 'off' and (tOptions.sHVRoll == 'all' or tOptions.sHVRoll == 'd20' or
+            ((tOptions.sHVRoll == 'atk' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'attack') or
+            ((tOptions.sHVRoll == 'dmgheal' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'damage') or
+            ((tOptions.sHVRoll == 'dmgheal' or tOptions.sHVRoll == 'atkdmgheal') and rRoll.sType == 'heal')) then
             local nodeCT = ActorManager.getCTNode(rSource);
             local sFaction = DB.getValue(nodeCT, 'friendfoe', '');
             if (tOptions.sHVActor == 'all' or (tOptions.sHVActor == sFaction)) then
@@ -93,8 +99,9 @@ end
 function getEffect(rSource)
     local tHVOptions = {};
     local nodeCT = ActorManager.getCTNode(rSource);
-    if nodeCT and (RulesetEffectManager.hasEffect(rSource, 'HighVariance') or RulesetEffectManager.hasEffect(rSource, 'BlessedDice') or
-        RulesetEffectManager.hasEffect(rSource, 'CursedDice') or RulesetEffectManager.hasEffect(rSource, 'CritFumble')) then
+    if nodeCT and
+        (RulesetEffectManager.hasEffect(rSource, 'HighVariance') or RulesetEffectManager.hasEffect(rSource, 'BlessedDice') or
+            RulesetEffectManager.hasEffect(rSource, 'CursedDice') or RulesetEffectManager.hasEffect(rSource, 'CritFumble')) then
         tHVOptions.sHVActor = DB.getValue(nodeCT, 'friendfoe', '');
         for _, nodeEffect in pairs(DB.getChildren(nodeCT, 'effects')) do
             local sEffect = DB.getValue(nodeEffect, 'label', '');
@@ -112,9 +119,10 @@ function getEffect(rSource)
                 end
                 local rEffectComp = EffectManager.parseEffectCompSimple(sEffectComp);
                 if rEffectComp.type == 'HVROLL' and rEffectComp.remainder[1] then
-                    local sLower = string.lower(rEffectComp.remainder[1]);
-                    if sLower == 'dmgheal' or sLower == 'atk' or sLower == 'atkdmgheal' or sLower == 'd20' or sLower == 'all' then
-                        tHVOptions.sHVRoll = sLower;
+                    local sLowerRemainder = string.lower(rEffectComp.remainder[1]);
+                    if sLowerRemainder == 'dmgheal' or sLowerRemainder == 'atk' or sLowerRemainder == 'atkdmgheal' or
+                        sLowerRemainder == 'd20' or sLowerRemainder == 'all' then
+                        tHVOptions.sHVRoll = sLowerRemainder;
                     end
                 end
                 if rEffectComp.type == 'CRITLINE' and rEffectComp.mod then
@@ -187,6 +195,7 @@ function blessedDice(rRoll)
     end
 end
 
+-- luacheck: push ignore 561
 function highVarianceDice(rRoll, sType)
 
     for _, die in pairs(rRoll.aDice) do
@@ -248,3 +257,4 @@ function highVarianceDice(rRoll, sType)
         end
     end
 end
+-- luacheck: pop
