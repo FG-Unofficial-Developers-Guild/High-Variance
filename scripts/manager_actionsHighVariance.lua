@@ -160,7 +160,7 @@ end
 
 function criticalFumble(rRoll, nValue)
     if nValue >= 0 and nValue <= 19 then
-        for _, die in pairs(rRoll.aDice) do
+        for _, die in ipairs(rRoll.aDice) do
             if die.result ~= nil and die.type == 'd20' then
                 if die.result >= nValue then
                     die.result = 20;
@@ -174,7 +174,7 @@ function criticalFumble(rRoll, nValue)
 end
 
 function cursedDice(rRoll)
-    for _, die in pairs(rRoll.aDice) do
+    for _, die in ipairs(rRoll.aDice) do
         if die.result ~= nil and die.type == 'd20' then
             if die.result == 20 then
                 die.result = 1;
@@ -185,7 +185,7 @@ function cursedDice(rRoll)
 end
 
 function blessedDice(rRoll)
-    for _, die in pairs(rRoll.aDice) do
+    for _,die in ipairs(rRoll.aDice) do
         if die.result ~= nil and die.type == 'd20' then
             if die.result == 1 then
                 die.result = 20;
@@ -198,7 +198,7 @@ end
 -- luacheck: push ignore 561
 function highVarianceDice(rRoll, sType)
 
-    for _, die in pairs(rRoll.aDice) do
+    for _, die in ipairs(rRoll.aDice) do
         if die.result ~= nil then
             if die.type == 'd20' and sType ~= 'dmgheal' then
                 if die.result == 7 or die.result == 10 then
