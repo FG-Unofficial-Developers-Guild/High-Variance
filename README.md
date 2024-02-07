@@ -1,7 +1,7 @@
 
 # High Variance
 
-[![Build FG Extension](https://github.com/rhagelstrom/HighVariance/actions/workflows/create-release.yml/badge.svg)](https://github.com/rhagelstrom/HighVariance/actions/workflows/create-release.yml) [![Luacheckrc](https://github.com/rhagelstrom/HighVariance/actions/workflows/luacheck.yml/badge.svg)](https://github.com/rhagelstrom/HighVariance/actions/workflows/luacheck.yml)
+[![Build FG Extension](https://github.com/rhagelstrom/HighVariance/actions/workflows/create-release.yml/badge.svg)](https://github.com/rhagelstrom/HighVariance/actions/workflows/create-release.yml) [![Luacheckrc](https://github.com/rhagelstrom/HighVariance/actions/workflows/luacheck.yml/badge.svg)](https://github.com/rhagelstrom/HighVariance/actions/workflows/luacheck.yml)  [![Markdownlint](https://github.com/rhagelstrom/HighVariance/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/rhagelstrom/HighVariance/actions/workflows/markdownlint.yml)
 
 High Variance is a FantasyGrounds extension for CoreRPG which changes the results of the dice to the more extreme end of the spectrum.
 
@@ -13,11 +13,11 @@ All 20s on a d20 roll will be changed to 1
 
 All 1s on a d20 roll will be changed to 20
 
-## Crit Fumble
+## Crit Fumble Dice
 
 All rolls on a d20 at or above the Critical Fumble Line will be changed to 20. All rolls below the Critical Fumble line will be changed to 1
 
-## High Variance
+## High Variance Dice
 
 The overall average of the result is the same but possible outcomes shifted to the extremes . Possible results on dice are as follows.
 
